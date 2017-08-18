@@ -1,4 +1,4 @@
-require("httpsvr")
+require("httpsrv")
 
 -- Conecta na rede wifi
 wifi_sta_config={}
@@ -30,27 +30,27 @@ tmr.alarm(1, 1000, 1, function()
     end
 end)
 
-httpsvr.start(80)
+httpsrv.start(80)
 
-httpsvr.attatchEvent("/", "POST", function(conn, request)
+httpsrv.attatchEvent("/", "POST", function(conn, request)
   if request.header["action"] == "create-file" then
     fd = file.open(request.header["file-name"], "w")
     if fd then
         fd:write(request.body)
         fd:close()
-        httpsvr.sendResponse(conn, 200, "Arquivo criado com sucesso!")
+        httpsrv.sendResponse(conn, 200, "Arquivo criado com sucesso!")
     else
-        httpsvr.sendResponse(conn, 500, "Erro ao criar arquivo")
+        httpsrv.sendResponse(conn, 500, "Erro ao criar arquivo")
     end
   else
-    httpsvr.sendResponse(conn, 400, "Cabeçalho incompleto")
+    httpsrv.sendResponse(conn, 400, "Cabeçalho incompleto")
   end
 end)
 
-httpsvr.attatchEvent("/", "GET", function(conn, request)
+httpsrv.attatchEvent("/", "GET", function(conn, request)
     if request.header["file-name"] then
         fd = file.open(request.header["file-name"], "r")
-        httpsvr.sendResponseCode(conn, 200)
+        httpsrv.sendResponseCode(conn, 200)
         line = fd:readline()
         repeat
             conn:send(line)
@@ -58,6 +58,6 @@ httpsvr.attatchEvent("/", "GET", function(conn, request)
         until line == nil
         fd:close()
     else
-        httpsvr.sendResponse(conn, 400, "Cabeçalho incompleto")
+        httpsrv.sendResponse(conn, 400, "Cabeçalho incompleto")
     end
 end)
