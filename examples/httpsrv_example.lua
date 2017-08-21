@@ -2,8 +2,8 @@ require("httpsrv")
 
 -- Conecta na rede wifi
 wifi_sta_config={}
-wifi_sta_config.ssid = "MCAF"
-wifi_sta_config.pwd = "27111997"
+wifi_sta_config.ssid = "SSID"
+wifi_sta_config.pwd = "PASSWORD"
 
 wifi.setmode(wifi.STATION)
 wifi.sta.config(wifi_sta_config)
