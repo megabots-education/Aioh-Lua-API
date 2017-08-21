@@ -37,10 +37,10 @@ local function wifiConect(wifi_sta_config)
 end
 
 local function createFile(conn, req)
-  if request.header["action"] == "create-file" then
-    fd = file.open(request.header["file-name"], "w")
+  if req.header["action"] == "create-file" then
+    fd = file.open(req.header["file-name"], "w")
     if fd then
-      fd:write(request.body)
+      fd:write(req.body)
       fd:close()
       httpsrv.sendResponse(conn, 200, "Arquivo criado com sucesso!")
     else
@@ -52,8 +52,8 @@ local function createFile(conn, req)
 end
 
 local function loadFile(conn, req)
-  if request.header["file-name"] then
-    fd = file.open(request.header["file-name"], "r")
+  if req.header["file-name"] then
+    fd = file.open(req.header["file-name"], "r")
     httpsrv.sendResponseCode(conn, 200)
     line = fd:readline()
     repeat
@@ -67,8 +67,8 @@ local function loadFile(conn, req)
 end
 
 local function deleteFile(conn, req)
-  if request.header["file-name"] then
-    file.remove(request.header["file-name"])
+  if req.header["file-name"] then
+    file.remove(req.header["file-name"])
     httpsrv.sendResponse(conn, 200, "Arquivo apagado com sucesso!")
   else
       httpsrv.sendResponse(conn, 400, "Cabeçalho incompleto")
@@ -76,8 +76,8 @@ local function deleteFile(conn, req)
 end
 
 local function runCode(conn, req)
-  if request.body ~= nil then
-    func = loadstring(request.body)
+  if req.body ~= nil then
+    func = loadstring(req.body)
     func()
   else
     httpsrv.sendResponse(conn, 400, "Código não enviado")
@@ -92,7 +92,7 @@ function start(wifi_sta_config, srvPort)
 
   httpsrv.start(srvPort)
 
-  httpsrv.attatchEvent("/", "GET", function(conn, request)
+  httpsrv.attatchEvent("/", "GET", function(conn, req)
     loadFile(conn, req)
   end)
 
