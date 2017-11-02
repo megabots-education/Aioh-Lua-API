@@ -3,5 +3,6 @@
     "port": "/dev/ttyS3",
     "optimize": false,
     "compile": false,
+    "minify": true,
     "keeppath": false
 }
