@@ -32,6 +32,12 @@ local function wifiConect(wifi_sta_config)
       print("MAC: " .. wifi.sta.getmac())
       print("Net Mask: " .. nm)
       print("Gateway: " .. gt)
+      
+      mdns.register("aiohdevice.local", {
+        description="Aioh",
+        service="http",
+        port=80
+      })
     end
   end)
 end
