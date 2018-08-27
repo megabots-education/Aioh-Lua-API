@@ -1,0 +1,8 @@
+{
+  "name": "aioh-lua-api",
+  "description": "API de desenvolvimento da plataforma Aioh",
+  "version": "0.0.1",
+  "dependencies": {
+    "nodemcu-tool": "^2.0"
+  }
+}
